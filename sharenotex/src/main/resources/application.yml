@@ -1,0 +1,76 @@
+server:
+  port: 1015
+
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  profiles:
+    active: development
+  application:
+    name: ShareNoteX
+     
+   #DataSource configuration for database connection
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5432/Speer
+    username: postgres
+    password: 110062
+
+# JPA (Java Persistence API) configuration common
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update      
+---
+
+spring:
+  config:
+    activate:
+      on-profile: development
+         
+  jpa:
+    show-sql: true
+    
+com:
+  keycloak:
+    server:
+      url: http://localhost:8080
+    master:
+      realm: master
+      clientId: admin-cli
+    admin:
+      username: Sharif
+      password: 110062
+    user:
+      realm: Security
+    config:
+      clientId: Speer
+      secret: yZbq4g3D71RmKcrFaNAqK2LhSfZ2uG6o
+      
+#resilience4j:
+#  ratelimiter:
+#    configs:
+#      default:
+#        limit-for-period: 5
+#        limit-refresh-period: 10s
+#        timeout-duration: 500ms
+#    instances:
+#      loginRateLimiter:
+#        base-config: default
+#      shareRateLimiter:
+#        base-config: default
+#      searchRateLimiter:
+#        base-config: default
+
+---
+
+spring:
+  config:
+    activate:
+      on-profile: production
+
+  jpa:
+    show-sql: false
+
